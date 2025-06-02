@@ -21,13 +21,13 @@
                 <p v-else class="text-sm text-red-500">Equipo lleno</p>
             </div>
         </div>
-        <div class="flex justify-center space-x-2 mt-4 sm:mt-6">
-            <button @click="cambiarPagina('anterior')" :disabled="paginaActual === 1"
+        <div class="flex justify-center space-x-2 mt-4 sm:mt-6" v-if="totalPagesComunitarios > 1">
+            <button @click="prevPageComunitarios" :disabled="currentPageComunitarios === 1"
                 class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 transition duration-300">
                 Anterior
             </button>
-            <span class="text-lg font-semibold text-gray-800">{{ paginaActual }} / {{ totalPaginas }}</span>
-            <button @click="cambiarPagina('siguiente')" :disabled="paginaActual === totalPaginas"
+            <span class="text-lg font-semibold text-gray-800">{{ currentPageComunitarios }} / {{ totalPagesComunitarios }}</span>
+            <button @click="nextPageComunitarios" :disabled="currentPageComunitarios === totalPagesComunitarios"
                 class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:bg-gray-400 transition duration-300">
                 Siguiente
             </button>
@@ -35,7 +35,7 @@
         <div v-if="equipoSel" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
             <div class="bg-white p-6 rounded-lg shadow-xl w-11/12 max-w-md">
                 <h2 class="text-xl font-semibold text-gray-800 mb-4">Clave de acceso para "{{ equipoSel.nombre }}"</h2>
-                <input v-model="clave" type="password" placeholder="Introduce la clave de acceso"
+                <input v-model="clave" type="password" maxlength="4" placeholder="Introduce la clave de acceso"
                     class="w-full px-4 py-2 border rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
                 <p v-if="error" class="text-red-500 text-sm">{{ error }}</p>
                 <div class="flex justify-end space-x-4">
@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted, computed, watch } from 'vue';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true
@@ -67,7 +67,7 @@ const emit = defineEmits<{
 
 const equipos = ref<EquipoListado[]>([])
 const searchQuery = ref('')
-const paginaActual = ref(1)
+const currentPageComunitarios = ref(1)
 const itemsPorPagina = 5
 const equipoSel = ref<EquipoListado | null>(null)
 const clave = ref('')
@@ -82,19 +82,25 @@ const equiposFiltrados = computed(() =>
     equipos.value.filter((e) => e.nombre.toLowerCase().includes(searchQuery.value.toLowerCase()))
 )
 
-const totalPaginas = computed(() =>
-    Math.ceil(equiposFiltrados.value.length / itemsPorPagina)
+const totalPagesComunitarios = computed(() =>
+    Math.max(1, Math.ceil(equiposFiltrados.value.length / itemsPorPagina))
 )
 
 const equiposFiltradosPag = computed(() => {
-    const start = (paginaActual.value - 1) * itemsPorPagina
+    const start = (currentPageComunitarios.value - 1) * itemsPorPagina
     return equiposFiltrados.value.slice(start, start + itemsPorPagina)
 })
 
-const cambiarPagina = (dir: 'anterior' | 'siguiente') => {
-    if (dir === 'anterior' && paginaActual.value > 1) paginaActual.value--
-    if (dir === 'siguiente' && paginaActual.value < totalPaginas.value) paginaActual.value++
+const prevPageComunitarios = () => {
+    if (currentPageComunitarios.value > 1) currentPageComunitarios.value--
 }
+const nextPageComunitarios = () => {
+    if (currentPageComunitarios.value < totalPagesComunitarios.value) currentPageComunitarios.value++
+}
+
+watch(searchQuery, () => {
+    currentPageComunitarios.value = 1
+})
 
 const seleccionarEquipo = (e: EquipoListado) => {
     equipoSel.value = e

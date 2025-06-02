@@ -141,9 +141,9 @@
         class="text-gray-700 font-bold flex flex-col items-center transition duration-300 ease-in-out transform hover:scale-110 hover:text-gray-900">
         <img src="@/assets/emogis/emogy5.png" alt="Panel Árbitro" class="w-10 h- mt-0.5" />
       </button>
-      <button v-else @click="emit('ver-partidos')"
+      <button v-else @click="emit('ver-estadisticas')"
         class="text-gray-700 font-bold flex flex-col items-center transition duration-300 ease-in-out transform hover:scale-110 hover:text-gray-900">
-        <img src="@/assets/emogis/emogy3.png" alt="Menú" class="w-10 h- mt-0.5" />
+        <img src="@/assets/emogis/emogy6.png" alt="Menú" class="w-10 h- mt-0.5" />
       </button>
       <button @click="isSidebarOpen = true"
         class="text-gray-700 font-bold flex flex-col items-center transition duration-300 ease-in-out transform hover:scale-110 hover:text-gray-900">
@@ -205,6 +205,9 @@ const selectedKey = ref<string | null>(null)
 const selectKey = (key: string) => {
   selectedKey.value = key
 }
+
+// Forzar reactividad de isCaptain para el menú
+const isCaptain = computed(() => props.isCaptain)
 
 const navigate = (eventName: string) => {
   selectedKey.value = eventName

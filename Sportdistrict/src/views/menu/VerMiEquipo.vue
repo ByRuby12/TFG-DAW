@@ -1,73 +1,97 @@
 <template>
-    <div class="mx-auto p-8 bg-white rounded-2xl shadow-lg">
+    <div class="mx-auto p-8 bg-gradient-to-br from-indigo-50 via-white to-indigo-100 rounded-2xl shadow-2xl">
         <div class="mt-8">
-            <h2 v-if="equipo" class="text-3xl font-semibold text-indigo-700 mb-6 text-center">Nombre del Equipo: {{
-                equipo.nombre }}</h2>
-            <div v-if="equipo" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="mb-6  grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <p class="text-lg font-medium text-gray-600"><strong>Siglas: </strong><span
-                            class="font-semibold text-indigo-600">{{ equipo.siglas }}</span></p>
-                    <p class="text-lg font-medium text-gray-600"><strong>Lema: </strong><span
-                            class="font-semibold text-indigo-600">{{ equipo.lema }}</span></p>
-                    <p class="text-lg font-medium text-gray-600"><strong>Estadio: </strong><span
-                            class="font-semibold text-indigo-600">{{ equipo.estadio }}</span></p>
+            <h2 v-if="equipo"
+                class="text-4xl font-extrabold text-indigo-700 mb-8 text-center drop-shadow-lg tracking-wide">
+                {{ equipo.nombre }}
+            </h2>
+            <!-- Sección principal de lema y estadio, solo una vez -->
+            <div v-if="equipo" class="mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Lema -->
+                    <div
+                        class="flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-indigo-200 rounded-xl shadow-xl p-10 border-t-4 border-indigo-400 animate-fade-in-up hover:scale-105 hover:shadow-indigo-300/40 transition-transform duration-300 gap-4">
+                        <span class="text-3xl">💬</span>
+                        <span class="text-2xl font-bold text-indigo-700 text-center">Lema</span>
+                        <span class="italic text-indigo-500 text-lg text-center">“{{ equipo.lema }}”</span>
+                    </div>
+                    <!-- Estadio -->
+                    <div
+                        class="flex flex-col items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-indigo-200 rounded-xl shadow-xl p-10 border-t-4 border-indigo-400 animate-fade-in-up hover:scale-105 hover:shadow-indigo-300/40 transition-transform duration-300 gap-4">
+                        <span class="text-3xl">🏟️</span>
+                        <span class="text-2xl font-bold text-indigo-700 text-center">Estadio</span>
+                        <span class="font-bold text-indigo-600 text-lg text-center">{{ equipo.estadio }}</span>
+                    </div>
                 </div>
             </div>
-            <div v-if="equipo" class="mb-6">
-                <h3 class="text-2xl font-semibold text-indigo-700 mb-4">Jugadores</h3>
+            <div v-if="equipo" class="mb-10">
+                <h3 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center gap-2">
+                    <span class="text-3xl">👥</span>
+                    Jugadores
+                </h3>
                 <ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     <li v-for="j in jugadores" :key="j.id"
-                        class="bg-indigo-50 p-4 rounded-lg shadow-sm flex items-center">
+                        class="bg-gradient-to-br from-indigo-100 via-white to-indigo-200 p-4 rounded-xl shadow flex items-center border border-indigo-200 hover:scale-105 transition-transform">
                         <div
-                            class="flex-shrink-0 w-12 h-12 bg-indigo-300 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                            class="flex-shrink-0 w-14 h-14 bg-indigo-400 text-white rounded-full flex items-center justify-center font-extrabold text-2xl shadow-md border-2 border-indigo-200">
                             {{ j.Nombreusu.charAt(0) }}
                         </div>
                         <div class="ml-4">
-                            <p class="text-indigo-600 font-semibold">{{ j.Nombreusu }}</p>
-                            <p class="text-gray-700">{{ j.persona.nombre }} {{ j.persona.primer_apellido }} <span v-if="j.persona.segundo_apellido">
-                            {{ j.persona.segundo_apellido }}
-                          </span>
-                        </p>
-                        <p class="text-sm text-gray-500">Posición: {{ j.posicion }}</p>
-                        <p class="text-sm text-gray-500">Pie dominante: {{ j.piernaBuena }}</p>
+                            <p class="text-indigo-700 font-bold text-lg">{{ j.Nombreusu }}</p>
+                            <p class="text-gray-800 font-medium">{{ j.persona.nombre }} {{ j.persona.primer_apellido }}
+                                <span v-if="j.persona.segundo_apellido">{{ j.persona.segundo_apellido }}</span></p>
+                            <div class="flex flex-wrap gap-2 mt-1">
+                                <span class="text-xs bg-indigo-200 text-indigo-800 px-2 py-0.5 rounded-full">Posición:
+                                    {{ j.posicion }}</span>
+                                <span class="text-xs bg-green-200 text-green-800 px-2 py-0.5 rounded-full">Pie: {{
+                                    j.piernaBuena }}</span>
+                            </div>
                         </div>
                     </li>
                 </ul>
             </div>
             <div v-if="equipo" class="space-y-4">
-                <h3 class="text-2xl font-semibold text-indigo-700 mb-4">Estadísticas</h3>
-                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                    <div class="bg-indigo-50 p-4 rounded-lg shadow-sm text-center">
-                        <p class="text-xl font-semibold text-indigo-600">{{ stats.ganados }}</p>
-                        <p class="text-sm text-gray-500">Ganados</p>
+                <h3 class="text-2xl font-bold text-indigo-700 mb-4 flex items-center gap-2">
+                    <span class="text-3xl">📊</span>
+                    Estadísticas
+                </h3>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-6">
+                    <div
+                        class="bg-gradient-to-br from-green-100 via-white to-green-200 p-6 rounded-xl shadow text-center border-t-4 border-green-400">
+                        <p class="text-2xl font-extrabold text-green-700">{{ stats.ganados }}</p>
+                        <p class="text-sm text-green-800 font-semibold">Ganados</p>
                     </div>
-                    <div class="bg-indigo-50 p-4 rounded-lg shadow-sm text-center">
-                        <p class="text-xl font-semibold text-indigo-600">{{ stats.perdidos }}</p>
-                        <p class="text-sm text-gray-500">Perdidos</p>
+                    <div
+                        class="bg-gradient-to-br from-red-100 via-white to-red-200 p-6 rounded-xl shadow text-center border-t-4 border-red-400">
+                        <p class="text-2xl font-extrabold text-red-700">{{ stats.perdidos }}</p>
+                        <p class="text-sm text-red-800 font-semibold">Perdidos</p>
                     </div>
-                    <div class="bg-indigo-50 p-4 rounded-lg shadow-sm text-center">
-                        <p class="text-xl font-semibold text-indigo-600">{{ stats.jugados }}</p>
-                        <p class="text-sm text-gray-500">Jugados</p>
+                    <div
+                        class="bg-gradient-to-br from-indigo-100 via-white to-indigo-200 p-6 rounded-xl shadow text-center border-t-4 border-indigo-400">
+                        <p class="text-2xl font-extrabold text-indigo-700">{{ stats.jugados }}</p>
+                        <p class="text-sm text-indigo-800 font-semibold">Jugados</p>
                     </div>
-                    <div class="bg-indigo-50 p-4 rounded-lg shadow-sm text-center">
-                        <p class="text-xl font-semibold text-indigo-600">{{ stats.golesTotales }}</p>
-                        <p class="text-sm text-gray-500">Goles</p>
+                    <div
+                        class="bg-gradient-to-br from-yellow-100 via-white to-yellow-200 p-6 rounded-xl shadow text-center border-t-4 border-yellow-400">
+                        <p class="text-2xl font-extrabold text-yellow-700">{{ stats.golesTotales }}</p>
+                        <p class="text-sm text-yellow-800 font-semibold">Goles</p>
                     </div>
                 </div>
             </div>
-            <div class="flex flex-wrap justify-center gap-4 mt-6">
+            <div class="flex flex-wrap justify-center gap-4 mt-8">
                 <button v-if="isCapitan" @click="abrirEdicion"
-                    class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition w-full sm:w-auto">
+                    class="px-8 py-3 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 transition w-full sm:w-auto">
                     Editar equipo
                 </button>
                 <button v-if="isMiembro" @click="salirEquipo"
-                    class="px-6 py-2 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 transition w-full sm:w-auto">
+                    class="px-8 py-3 bg-yellow-500 text-white font-bold rounded-xl shadow-lg hover:bg-yellow-600 transition w-full sm:w-auto">
                     Salir del equipo
                 </button>
             </div>
             <div v-if="editando" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-                <div class="bg-white p-6 rounded-2xl shadow-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto space-y-6">
-                    <h3 class="text-2xl font-semibold text-gray-800">Editar equipo</h3>
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto space-y-6">
+                    <h3 class="text-2xl font-bold text-gray-800">Editar equipo</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-sm font-medium text-gray-700">Nombre del Equipo</label>
@@ -121,7 +145,6 @@
             </div>
         </div>
     </div>
-
 </template>
 
 <script setup lang="ts">
@@ -132,6 +155,7 @@ const props = defineProps<{ equipoId: number | null }>()
 const emit = defineEmits<{
     (e: 'volver-menu'): void
     (e: 'salio-equipo'): void
+    (e: 'actualizar-rol'): void
 }>()
 
 const currentUser = ref<{ id: number } | null>(null)
@@ -213,6 +237,7 @@ const actualizarEquipo = async () => {
     )
     editando.value = false
     fetchJugadores()
+    emit('actualizar-rol') // Notificar al padre para refrescar el rol/capitanía
 }
 
 const salirEquipo = async () => {
@@ -223,6 +248,7 @@ const salirEquipo = async () => {
         { withCredentials: true }
     )
     emit('salio-equipo')
+    emit('actualizar-rol') // Notificar al padre para refrescar el rol/capitanía
 }
 
 
@@ -232,4 +258,20 @@ onMounted(async () => {
 })
 </script>
 
-<style scoped></style>
+<style scoped>
+@keyframes fade-in-up {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fade-in-up 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+</style>

@@ -23,12 +23,15 @@
             </div>
             <div v-else>
                 <div v-for="p in paginatedMisPartidos" :key="p.id"
-                    class="bg-white border border-indigo-200 rounded-2xl shadow-md p-6 transition hover:shadow-xl hover:-translate-y-1">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-indigo-700 font-bold text-xl">
+                    class="bg-white border border-indigo-200 rounded-2xl shadow-md p-6 transition hover:shadow-xl hover:-translate-y-1 mb-4">
+                    <div class="flex items-center justify-between mb-2 cursor-pointer group" @click="p._expand = !p._expand">
+                        <span class="text-indigo-700 font-bold text-xl flex items-center gap-2">
                             {{ p.equipoLocal?.siglas || p.equipoLocal?.nombre || 'Equipo Local' }}
                             <span class="text-gray-500">vs</span>
                             {{ p.equipoVisitante?.siglas || p.equipoVisitante?.nombre || 'Equipo Visitante' }}
+                            <svg :class="[p._expand ? 'rotate-180' : '', 'transition-transform duration-200']" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-indigo-500">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
                         </span>
                         <div class="text-right space-y-1">
                             <span class="block text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">{{ formatFecha(p.fechaInicio) }}</span>
@@ -44,12 +47,19 @@
                             </span>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-600">
-                        <span class="font-semibold">Estadio:</span> {{ p.estadio }}
-                    </p>
-                    <p class="text-sm text-gray-600">
-                        <span class="font-semibold">Hora:</span> {{ formatTime(p.fechaInicio) }}
-                    </p>
+                    <transition name="fade">
+                      <div v-if="p._expand" class="mt-3 border-t pt-3 space-y-1 animate-fade-in">
+                        <div class="mb-2 flex flex-wrap gap-2 items-center">
+                          <span class="font-semibold text-gray-700">{{ p.equipoLocal?.nombre || 'Equipo Local' }}</span>
+                          <span class="mx-2 text-gray-400">vs</span>
+                          <span class="font-semibold text-gray-700">{{ p.equipoVisitante?.nombre || 'Equipo Visitante' }}</span>
+                        </div>
+                        <p class="text-sm text-gray-600"><span class="font-semibold">Descripción:</span> {{ p.descripcion || 'Sin descripción' }}</p>
+                        <p class="text-sm text-gray-600"><span class="font-semibold">Estadio:</span> {{ p.estadio }}</p>
+                        <p class="text-sm text-gray-600"><span class="font-semibold">Hora:</span> {{ formatTime(p.fechaInicio) }}</p>
+                        <p class="text-sm text-gray-600"><span class="font-semibold">Árbitro:</span> {{ p.arbitro?.persona ? p.arbitro.persona.nombre + ' ' + p.arbitro.persona.primer_apellido : (p.arbitro?.Nombreusu || '-') }}</p>
+                      </div>
+                    </transition>
                 </div>
                 <div class="flex justify-center space-x-2 mt-4 sm:mt-6" v-if="totalPagesMisPartidos > 1">
                     <button @click="prevPageMisPartidos" :disabled="currentPageMisPartidos === 1"
@@ -69,14 +79,10 @@
             <h3 class="text-2xl font-semibold text-gray-800 mb-4">Crear un nuevo partido</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 mb-1" for="equipoLocal">Equipo Local</label>
-                    <select v-model="form.equipoLocalId"
-                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500">
-                        <option disabled value="" class="px-4 py-2 hover:bg-indigo-100 cursor-pointer">Equipo Local
-                        </option>
-                        <option v-for="e in opcionesLocales" :value="e.id" :key="e.id"
-                            class="px-4 py-2 hover:bg-indigo-100 cursor-pointer">{{ e.nombre }}</option>
-                    </select>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1">Equipo Local</label>
+                    <div class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg bg-gray-100 text-gray-700 shadow-sm">
+                        {{ miEquipo?.nombre || 'Mi equipo' }}
+                    </div>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1" for="equipoVisitante">Equipo
@@ -147,25 +153,43 @@
             </div>
             <div v-else>
                 <div v-for="p in paginatedComunitarios" :key="p.id"
-                    class="bg-white border border-indigo-200 rounded-2xl shadow-md p-6 transition hover:shadow-xl hover:-translate-y-1">
-                    <div class="flex items-center justify-between mb-4">
-                        <span class="text-indigo-700 font-bold text-xl">
-                            {{ p.equipoLocal?.siglas || '-' }} <span class="text-gray-500">vs</span> {{
-                                p.equipoVisitante?.siglas ||
-                                '-' }}
+                    class="bg-white border border-indigo-200 rounded-2xl shadow-md p-6 transition hover:shadow-xl hover:-translate-y-1 mb-4">
+                    <div class="flex items-center justify-between mb-2 cursor-pointer group" @click="p._expand = !p._expand">
+                        <span class="text-indigo-700 font-bold text-xl flex items-center gap-2">
+                            {{ p.equipoLocal?.siglas || '-' }} <span class="text-gray-500">vs</span> {{ p.equipoVisitante?.siglas || '-' }}
+                            <svg :class="[p._expand ? 'rotate-180' : '', 'transition-transform duration-200']" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-indigo-500">
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+                            </svg>
                         </span>
-                        <div class="text-right">
+                        <div class="text-right space-y-1">
                             <span class="block text-sm bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full">
                                 {{ formatFecha(p.fechaInicio) }}
                             </span>
+                            <span v-if="p.estado" :class="['inline-block px-3 py-1 rounded-full text-xs font-semibold',
+                              p.estado === 'pendiente' ? 'bg-yellow-100 text-yellow-800 border border-yellow-300' :
+                              p.estado === 'activo' ? 'bg-green-100 text-green-800 border border-green-300' :
+                              p.estado === 'terminado' ? 'bg-gray-200 text-gray-700 border border-gray-300' :
+                              p.estado === 'asignado' ? 'bg-blue-100 text-blue-800 border border-blue-300' :
+                              p.estado === 'rechazado' ? 'bg-red-100 text-red-700 border border-red-300' :
+                              'bg-gray-100 text-gray-500 border border-gray-200'
+                            ]">
+                              {{ p.estado.charAt(0).toUpperCase() + p.estado.slice(1) }}
+                            </span>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-600 mb-2">
-                        <span class="font-semibold">Estadio:</span> {{ p.estadio }}
-                    </p>
-                    <p class="text-sm text-gray-600">
-                        <span class="font-semibold">Hora: </span> {{ formatTime(p.fechaInicio) }}
-                    </p>
+                    <transition name="fade">
+                      <div v-if="p._expand" class="mt-3 border-t pt-3 space-y-1 animate-fade-in">
+                        <div class="mb-2 flex flex-wrap gap-2 items-center">
+                          <span class="font-semibold text-gray-700">{{ p.equipoLocal?.nombre || 'Equipo Local' }}</span>
+                          <span class="mx-2 text-gray-400">vs</span>
+                          <span class="font-semibold text-gray-700">{{ p.equipoVisitante?.nombre || 'Equipo Visitante' }}</span>
+                        </div>
+                        <p class="text-sm text-gray-600"><span class="font-semibold">Descripción:</span> {{ p.descripcion || 'Sin descripción' }}</p>
+                        <p class="text-sm text-gray-600"><span class="font-semibold">Estadio:</span> {{ p.estadio }}</p>
+                        <p class="text-sm text-gray-600"><span class="font-semibold">Hora:</span> {{ formatTime(p.fechaInicio) }}</p>
+                        <p class="text-sm text-gray-600"><span class="font-semibold">Árbitro:</span> {{ p.arbitro?.persona ? p.arbitro.persona.nombre + ' ' + p.arbitro.persona.primer_apellido : (p.arbitro?.Nombreusu || '-') }}</p>
+                      </div>
+                    </transition>
                 </div>
                 <div class="flex justify-center space-x-2 mt-4 sm:mt-6" v-if="totalPagesComunitarios > 1">
                     <button @click="prevPageComunitarios" :disabled="currentPageComunitarios === 1"
@@ -223,7 +247,7 @@ const opcionesLocales = computed(() =>
 )
 
 const opcionesVisitantes = computed(() =>
-    todosEquipos.value.filter(e => e.id !== form.value.equipoLocalId)
+    todosEquipos.value.filter(e => miEquipo.value && e.id !== miEquipo.value.id)
 )
 
 const fetchMisEquipos = async () => {
@@ -272,6 +296,10 @@ const fetchArbitros = async () => {
 }
 
 const crearPartido = async () => {
+    // Asegurarse de que el equipo local es el del usuario
+    if (miEquipo.value) {
+        form.value.equipoLocalId = miEquipo.value.id
+    }
     await axios.post('http://localhost:3000/partidos', form.value, { withCredentials: true })
     await fetchMisPartidos()
     tab.value = 'mios'
@@ -307,6 +335,8 @@ function nextPageComunitarios() {
 }
 watch(comunitarios, () => { currentPageComunitarios.value = 1 })
 
+const miEquipo = computed(() => misEquipos.value.length > 0 ? misEquipos.value[0] : null)
+
 onMounted(async () => {
     await Promise.all([
         fetchMisEquipos(),
@@ -324,6 +354,19 @@ onMounted(async () => {
         estadios.value = []
     }
 })
+
+watch(miEquipo, (nuevo) => {
+    if (nuevo && form.value) {
+        form.value.equipoLocalId = nuevo.id
+    }
+}, { immediate: true })
 </script>
 
-<style scoped></style>
+<style scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.2s;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+</style>

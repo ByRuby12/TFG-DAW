@@ -69,7 +69,9 @@ onMounted(async () => {
 watch(vista, async () => {
     page.value = 1
     reportes.value = (await axios.get<Reporte[]>(`http://localhost:3000/reportes/todos`, { withCredentials: true })).data
+    
 })
+
 const items = computed(() => {
     return reportes.value
         .filter(r => vista.value === 'pendientes' ? r.estado === 'Pendiente' : r.estado !== 'Pendiente')
