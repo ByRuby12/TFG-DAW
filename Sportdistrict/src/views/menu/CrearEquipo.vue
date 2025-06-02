@@ -87,10 +87,11 @@ const crearEquipo = async () => {
         error.value = 'Las siglas no pueden exceder 3 caracteres.'
         return
     }
-
+    // Convertir siglas a mayúsculas antes de enviar
+    const equipoPayload = { ...equipo.value, siglas: equipo.value.siglas.toUpperCase() }
     try {
         const response = await axios.post('http://localhost:3000/equipos',
-            { ...equipo.value },
+            equipoPayload,
             { withCredentials: true }
         )
         if (response.data.success) {
@@ -104,7 +105,7 @@ const crearEquipo = async () => {
                 claveAcceso: '',
                 estadio: ''
             }
-
+            window.location.reload() // Refrescar la web tras crear el equipo
         } else {
             error.value = response.data.message || 'Error al crear el equipo'
         }

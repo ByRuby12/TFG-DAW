@@ -301,9 +301,20 @@ const crearPartido = async () => {
         form.value.equipoLocalId = miEquipo.value.id
     }
     await axios.post('http://localhost:3000/partidos', form.value, { withCredentials: true })
+    // Resetear el formulario después de crear el partido
+    form.value = {
+        equipoLocalId: miEquipo.value ? miEquipo.value.id : null,
+        equipoVisitanteId: null,
+        descripcion: '',
+        fechaInicio: '',
+        estadio: '',
+        codigoPostal: '',
+        arbitroId: null
+    }
     await fetchMisPartidos()
     tab.value = 'mios'
 }
+
 
 const pageSize = 5
 // Mis partidos paginados

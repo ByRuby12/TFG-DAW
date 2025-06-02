@@ -41,7 +41,7 @@
               class="w-full px-3 py-2 mb-3 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
             <div v-for="m in recentMatches" :key="m.id" class="border rounded-lg shadow-md p-4">
               <p class="text-sm font-semibold">ID: {{ m.id }}</p>
-              <p class="text-sm">Equipos: {{ m.equipoLocal.nombre }} vs {{ m.equipoVisitante.nombre }}</p>
+              <p class="text-sm">Equipos: {{ m.equipoLocal?.nombre || 'Equipo eliminado' }} vs {{ m.equipoVisitante?.nombre || 'Equipo eliminado' }}</p>
               <p class="text-sm">Fecha: {{ formatFecha(m.fechaInicio) }}</p>
               <p class="text-sm">Hora: {{ formatTime(m.fechaInicio) }}</p>
               <div class="mt-2 flex space-x-2">
@@ -50,7 +50,7 @@
                   Modificar
                 </button>
                 <button
-                  @click="pedirConfirmacion('partido', m.id, `${m.equipoLocal.nombre} vs ${m.equipoVisitante.nombre}`)"
+                  @click="pedirConfirmacion('partido', m.id, `${m.equipoLocal?.nombre || 'Equipo eliminado'} vs ${m.equipoVisitante?.nombre || 'Equipo eliminado'}`)"
                   class="px-2 py-1 bg-red-500 hover:bg-red-600 text-white rounded text-xs">
                   Eliminar
                 </button>
@@ -113,7 +113,7 @@
     class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center px-2 sm:px-0">
     <div class="bg-white p-2 sm:p-8 rounded-lg shadow-lg max-w-4xl w-full overflow-y-auto max-h-[98vh]">
       <h2 class="text-xl sm:text-2xl font-bold text-blue-700 mb-4 sm:mb-7 text-center">
-        {{ editingMatch.equipoLocal.nombre }} vs {{ editingMatch.equipoVisitante.nombre }}
+        {{ editingMatch.equipoLocal?.nombre || 'Equipo eliminado' }} vs {{ editingMatch.equipoVisitante?.nombre || 'Equipo eliminado' }}
       </h2>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4 mb-6">
         <div>
@@ -150,8 +150,8 @@
               <div class="flex flex-col gap-2 w-full sm:w-1/4">
                 <select v-model="g.equipo" class="border p-2 sm:p-3 rounded-lg w-full focus:ring-2 focus:ring-blue-500">
                   <option disabled value="">Equipo</option>
-                  <option value="local">{{ editingMatch.equipoLocal.nombre }}</option>
-                  <option value="visitante">{{ editingMatch.equipoVisitante.nombre }}</option>
+                  <option value="local">{{ editingMatch.equipoLocal?.nombre || 'Equipo eliminado' }}</option>
+                  <option value="visitante">{{ editingMatch.equipoVisitante?.nombre || 'Equipo eliminado' }}</option>
                 </select>
               </div>
               <div class="flex flex-col gap-2 w-full sm:w-1/4">
@@ -200,8 +200,7 @@
           :key="i" class="mb-2">
           <div @click="toggleOpen(t, 'tarjeta', i)"
             class="flex items-center justify-between bg-yellow-50 rounded-lg px-3 py-2 cursor-pointer select-none">
-            <span class="font-semibold text-yellow-700 text-sm">Tarjeta {{ i + 1 }} - {{ t.jugador || 'Sin jugador'
-              }}</span>
+            <span class="font-semibold text-yellow-700 text-sm">Tarjeta {{ i + 1 }} - {{ t.jugador || 'Sin jugador' }}</span>
             <!-- @ts-ignore -->
             <span class="text-yellow-600">{{ t.__open ? '▲' : '▼' }}</span>
           </div>
@@ -210,8 +209,8 @@
               <div class="flex flex-col gap-2 w-full sm:w-1/2">
                 <select v-model="t.equipo" class="border p-2 sm:p-3 rounded-lg w-full focus:ring-2 focus:ring-blue-500">
                   <option disabled value="">Equipo</option>
-                  <option value="local">{{ editingMatch.equipoLocal.nombre }}</option>
-                  <option value="visitante">{{ editingMatch.equipoVisitante.nombre }}</option>
+                  <option value="local">{{ editingMatch.equipoLocal?.nombre || 'Equipo eliminado' }}</option>
+                  <option value="visitante">{{ editingMatch.equipoVisitante?.nombre || 'Equipo eliminado' }}</option>
                 </select>
               </div>
               <div class="flex flex-col gap-2 w-full sm:w-1/2">

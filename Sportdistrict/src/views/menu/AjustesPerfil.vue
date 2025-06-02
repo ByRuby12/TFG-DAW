@@ -254,6 +254,7 @@ const handleUpdate = async () => {
         },
             { withCredentials: true })
         alert('Perfil actualizado correctamente.')
+        window.location.reload() // Refrescar la web tras guardar cambios
     } catch (err: any) {
         console.error(err)
         alert('Error al actualizar')

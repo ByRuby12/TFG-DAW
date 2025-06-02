@@ -114,4 +114,17 @@ export class EquiposController {
         await this.equiposService.remove(id)
         return { success: true }
     }
+
+    @Post(':id/salir-y-borrar')
+    async salirYBorrarEquipo(@Req() req: Request, @Param('id') id: number) {
+        const usuario = req.session.usuario;
+        if (!usuario) throw new UnauthorizedException('No autenticado');
+        await this.equiposService.salirYBorrarEquipo(usuario.id, id);
+        return { success: true };
+    }
+
+    @Get(':id/partidos-conflictivos')
+    async partidosConflictivos(@Param('id') id: number) {
+        return this.equiposService.getPartidosConflictivos(id);
+    }
 }

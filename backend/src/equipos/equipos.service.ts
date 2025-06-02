@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { Equipo } from './equipo.entity';
 import { CreateEquipoDto } from './dto/create-equipo.dto';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
@@ -21,7 +21,7 @@ export class EquiposService {
     private usuariosService: UsuariosService,
     @InjectRepository(Partido)
     private partidosRepo: Repository<Partido>,
-  ) {}
+  ) { }
 
   async create(sessionUsuarioId: number, dto: CreateEquipoDto): Promise<Equipo> {
     const usuario = await this.usuariosService.findByIdWithJugador(sessionUsuarioId);
@@ -63,7 +63,31 @@ export class EquiposService {
     const jugadorId = usuario?.jugador?.id;
     if (!jugadorId) throw new UnauthorizedException('Perfil de jugador incompleto');
 
-    // Eliminar al jugador del equipo
+    // Cargar los jugadores actuales
+    const jugadores = await this.equiposRepo
+      .createQueryBuilder()
+      .relation(Equipo, 'jugadores')
+      .of(equipoId)
+      .loadMany<Jugador>();
+
+    if (!jugadores.some(j => j.id === jugadorId)) {
+      throw new BadRequestException('No eres miembro de este equipo');
+    }
+
+    if (jugadores.length === 1) {
+      // Si es el último jugador, eliminar todos los partidos asociados y el equipo
+      await this.partidosRepo.delete({ equipoLocalId: equipoId });
+      await this.partidosRepo.delete({ equipoVisitanteId: equipoId });
+      await this.equiposRepo
+        .createQueryBuilder()
+        .relation(Equipo, 'jugadores')
+        .of(equipoId)
+        .remove(jugadorId);
+      await this.equiposRepo.delete(equipoId);
+      return;
+    }
+
+    // Si quedan más jugadores, eliminar al jugador
     await this.equiposRepo
       .createQueryBuilder()
       .relation(Equipo, 'jugadores')
@@ -77,26 +101,11 @@ export class EquiposService {
       .of(equipoId)
       .loadMany<Jugador>();
 
-    if (restantes.length === 0) {
-      // Si no quedan jugadores, verificar si hay partidos asociados
-      const asociados = await this.partidosRepo.count({
-        where: [
-          { equipoLocalId: equipoId },
-          { equipoVisitanteId: equipoId },
-        ],
-      });
-      if (asociados > 0) {
-        throw new BadRequestException(
-          `No puedes salir ni eliminar el equipo porque eres el último jugador y hay ${asociados} partido(s) asociado(s).`
-        );
-      }
-      // Si no hay partidos asociados, borrar el equipo y terminar
-      await this.equiposRepo.delete(equipoId);
-      return;
-    }
     // Si quedan jugadores, reasignar el creador/capitán
-    const nuevoCapitan = restantes[Math.floor(Math.random() * restantes.length)];
-    await this.equiposRepo.update(equipoId, { creadorId: nuevoCapitan.id });
+    if (restantes.length > 0) {
+      const nuevoCapitan = restantes[Math.floor(Math.random() * restantes.length)];
+      await this.equiposRepo.update(equipoId, { creadorId: nuevoCapitan.id });
+    }
   }
 
   async listarEquipos(): Promise<{ id: number; nombre: string; jugadoresCount: number }[]> {
@@ -118,10 +127,10 @@ export class EquiposService {
     if (equipo.claveAcceso !== clave) throw new BadRequestException('Clave incorrecta')
 
     await this.equiposRepo
-        .createQueryBuilder()
-        .relation(Equipo, 'jugadores')
-        .of(equipoId)
-        .add(jugadorId)
+      .createQueryBuilder()
+      .relation(Equipo, 'jugadores')
+      .of(equipoId)
+      .add(jugadorId)
     return equipo
   }
 
@@ -138,51 +147,98 @@ export class EquiposService {
 
   async remove(id: number): Promise<void> {
     const asociados = await this.partidosRepo.count({
-        where: [
-            { equipoLocalId: id },
-            { equipoVisitanteId: id }
-        ]
+      where: [
+        { equipoLocalId: id },
+        { equipoVisitanteId: id }
+      ]
     })
     if (asociados > 0) {
-        throw new BadRequestException(`No puedes eliminar este equipo porque tiene ${asociados} partido(s) asociado(s).`)
+      throw new BadRequestException(`No puedes eliminar este equipo porque tiene ${asociados} partido(s) asociado(s).`)
     }
     const result = await this.equiposRepo.delete(id)
     if (result.affected === 0) {
-        throw new NotFoundException(`Equipo ${id} no encontrado`)
+      throw new NotFoundException(`Equipo ${id} no encontrado`)
     }
   }
 
   async estadisticas(teamId: number): Promise<{
-      jugados: number
-      ganados: number
-      perdidos: number
-      golesTotales: number
+    jugados: number
+    ganados: number
+    perdidos: number
+    golesTotales: number
   }> {
-      const partidos = await this.partidosRepo.find({
-          where: [
-              { equipoLocalId: teamId, estado: EstadoPartido.TERMINADO },
-              { equipoVisitanteId: teamId, estado: EstadoPartido.TERMINADO }
-          ],
-          relations: ['goles']
-      })
-      let ganados = 0, perdidos = 0, golesTotales = 0
-      for (const p of partidos) {
-          const golesLocal = p.goles.filter(g => g.equipo === 'local')
-          const golesVisit = p.goles.filter(g => g.equipo === 'visitante')
-          const miEsLocal = p.equipoLocalId === teamId
-          const misGolesCount = miEsLocal ? golesLocal.length : golesVisit.length
-          const susGolesCount = miEsLocal ? golesVisit.length : golesLocal.length
+    const partidos = await this.partidosRepo.find({
+      where: [
+        { equipoLocalId: teamId, estado: EstadoPartido.TERMINADO },
+        { equipoVisitanteId: teamId, estado: EstadoPartido.TERMINADO }
+      ],
+      relations: ['goles']
+    })
+    let ganados = 0, perdidos = 0, golesTotales = 0
+    for (const p of partidos) {
+      const golesLocal = p.goles.filter(g => g.equipo === 'local')
+      const golesVisit = p.goles.filter(g => g.equipo === 'visitante')
+      const miEsLocal = p.equipoLocalId === teamId
+      const misGolesCount = miEsLocal ? golesLocal.length : golesVisit.length
+      const susGolesCount = miEsLocal ? golesVisit.length : golesLocal.length
 
-          if (misGolesCount > susGolesCount) ganados++
-          else if (misGolesCount < susGolesCount) perdidos++
-          const misGoles = miEsLocal ? golesLocal : golesVisit
-          golesTotales += misGolesCount
-      }
-      return {
-          jugados: partidos.length,
-          ganados,
-          perdidos,
-          golesTotales
-      }
+      if (misGolesCount > susGolesCount) ganados++
+      else if (misGolesCount < susGolesCount) perdidos++
+      const misGoles = miEsLocal ? golesLocal : golesVisit
+      golesTotales += misGolesCount
+    }
+    return {
+      jugados: partidos.length,
+      ganados,
+      perdidos,
+      golesTotales
+    }
+  }
+
+  async getPartidosConflictivos(equipoId: number) {
+    const partidos = await this.partidosRepo.find({
+      where: [
+        {
+          equipoLocalId: equipoId,
+          estado: In([
+            EstadoPartido.PENDIENTE,
+            EstadoPartido.ACTIVO,
+            EstadoPartido.ASIGNADO,
+          ]),
+        },
+        {
+          equipoVisitanteId: equipoId,
+          estado: In([
+            EstadoPartido.PENDIENTE,
+            EstadoPartido.ACTIVO,
+            EstadoPartido.ASIGNADO,
+          ]),
+        },
+      ],
+    });
+    return { partidos };
+  }
+
+  async salirYBorrarEquipo(sessionUsuarioId: number, equipoId: number): Promise<void> {
+    const usuario = await this.usuariosService.findByIdWithJugador(sessionUsuarioId);
+    const jugadorId = usuario?.jugador?.id;
+    if (!jugadorId) throw new UnauthorizedException('Perfil de jugador incompleto');
+
+    // Verifica que sea el último jugador
+    const jugadores = await this.equiposRepo
+      .createQueryBuilder()
+      .relation(Equipo, 'jugadores')
+      .of(equipoId)
+      .loadMany<Jugador>();
+    if (jugadores.length !== 1 || jugadores[0].id !== jugadorId) {
+      throw new BadRequestException('Solo el último miembro puede usar esta opción');
+    }
+
+    // Elimina TODOS los partidos donde el equipo sea local o visitante, sin importar el estado
+    await this.partidosRepo.delete({ equipoLocalId: equipoId });
+    await this.partidosRepo.delete({ equipoVisitanteId: equipoId });
+
+    // Elimina el equipo
+    await this.equiposRepo.delete(equipoId);
   }
 }

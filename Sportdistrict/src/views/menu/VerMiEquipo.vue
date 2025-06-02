@@ -242,13 +242,31 @@ const actualizarEquipo = async () => {
 
 const salirEquipo = async () => {
     if (!props.equipoId) return
-    await axios.post(
-        `http://localhost:3000/equipos/${props.equipoId}/salir`,
-        {},
-        { withCredentials: true }
-    )
-    emit('salio-equipo')
-    emit('actualizar-rol') // Notificar al padre para refrescar el rol/capitanía
+    // Si es el último miembro, pedir confirmación especial
+    if (jugadores.value.length === 1) {
+        // Consultar partidos conflictivos (puedes mejorar esto trayendo los partidos desde el backend)
+        const res = await axios.get(`http://localhost:3000/equipos/${props.equipoId}/partidos-conflictivos`, { withCredentials: true });
+        const conflictivos = res.data?.partidos || [];
+        if (conflictivos.length > 0) {
+            if (!confirm('Eres el último miembro. Se eliminarán todos los partidos pendientes/activos/asignados y el equipo. ¿Deseas continuar?')) return;
+            // Llama al endpoint especial que borra partidos y equipo
+            await axios.post(`http://localhost:3000/equipos/${props.equipoId}/salir-y-borrar`, {}, { withCredentials: true });
+            window.location.reload();
+            return;
+        }
+    }
+    try {
+        await axios.post(
+            `http://localhost:3000/equipos/${props.equipoId}/salir`,
+            {},
+            { withCredentials: true }
+        )
+        emit('salio-equipo')
+        emit('actualizar-rol') // Notificar al padre para refrescar el rol/capitanía
+    } catch (err: any) {
+        alert(err.response?.data?.message || 'No se pudo salir del equipo')
+        await fetchJugadores() // Refresca el estado real del equipo tras error
+    }
 }
 
 
