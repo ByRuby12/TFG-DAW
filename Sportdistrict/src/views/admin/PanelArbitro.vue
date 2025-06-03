@@ -121,15 +121,15 @@
 </div>
 
 
-        <div class="flex justify-center space-x-2 mt-4 sm:mt-6" v-if="totalPages > 1 && !seleccionado">
+        <div v-if="totalPages > 1" class="flex justify-center items-center space-x-2 mt-8">
             <button @click="prev" :disabled="page === 1"
-                class="px-6 py-3 text-lg font-semibold bg-indigo-600 text-white rounded-xl shadow hover:bg-indigo-700 disabled:bg-gray-300 disabled:text-gray-500 transition duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2">
-                ⬅️ Anterior
+                class="px-4 py-2 bg-indigo-600 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed transition">
+                Anterior
             </button>
-            <span class="text-lg font-bold text-gray-800 flex items-center px-4">{{ page }} / {{ totalPages }}</span>
+            <span class="mx-2 text-gray-700 font-semibold">{{ page }} / {{ totalPages }}</span>
             <button @click="next" :disabled="page === totalPages"
-                class="px-6 py-3 text-lg font-semibold bg-indigo-600 text-white rounded-xl shadow hover:bg-indigo-700 disabled:bg-gray-300 disabled:text-gray-500 transition duration-300 focus:outline-none focus:ring-2 focus:ring-indigo-400 focus:ring-offset-2">
-                Siguiente ➡️
+                class="px-4 py-2 bg-indigo-600 text-white rounded-lg disabled:bg-gray-400 disabled:cursor-not-allowed transition">
+                Siguiente
             </button>
         </div>
     </div>
@@ -260,13 +260,13 @@ function addGolEdit() {
   })
 }
 function removeGolEdit(i: number) {
-  if (!editingMatch.value) return
-  editingMatch.value.goles.splice(i, 1)
+  if (!seleccionado.value) return
+  seleccionado.value.goles.splice(i, 1)
 }
 
 function removeTarjetaEdit(i: number) {
-  if (!editingMatch.value) return
-  editingMatch.value.tarjetas.splice(i, 1)
+  if (!seleccionado.value) return
+  seleccionado.value.tarjetas.splice(i, 1)
 }
 function toggleOpen(obj: any, tipo: 'gol' | 'tarjeta', idx: number) {
   obj.__open = !obj.__open

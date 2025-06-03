@@ -34,13 +34,28 @@ CREATE TABLE IF NOT EXISTS `equipos` (
   PRIMARY KEY (`id`),
   KEY `FK_04d9fcf6825b7635362534a5b71` (`creadorId`),
   CONSTRAINT `FK_04d9fcf6825b7635362534a5b71` FOREIGN KEY (`creadorId`) REFERENCES `jugadores` (`id_jugador`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 INSERT INTO `equipos` (`id`, `nombre`, `siglas`, `lema`, `color`, `claveAcceso`, `estadio`, `fechaFundacion`, `creadorId`) VALUES
 	(1, 'Los Leones', 'LLN', 'Fuerza y Honor', '#FF0000', 'clave123', 'CALLE EMBALSE DE SAN JUAN 1, 28051, MADRID', '2020-01-01', 1),
-	(2, 'Águilas Negras', 'AGN', 'Vuela Alto', '#000000', 'clave456', 'CALLE ALTO DEL RETIRO 13 c/v calle Antonio Gades, 28051, MADRID', '2021-06-15', 4),
-	(3, 'Tigres Dorados', 'TGD', 'Velocidad y Precisión', '#FFD700', 'clave789', 'AVENIDA CERRO MILANO 1, 28051, MADRID', '2019-09-10', 5),
-	(21, 'Holaaa', 'Hol', 'Holaaa', '#b95050', 'Hola', 'CALLE EMBALSE DE SAN JUAN 1, 28051, MADRID', '2025-05-30', 36);
+	(99, 'Equipo Test', 'TST', '¡A probar!', '#123456', 'testclave', 'CALLE TEST 99, 28099, MADRID', '2025-06-03', 99),
+	(100, 'EquipoTest100', 'E10', '¡A ganar!', '#100100', 'clave100', 'CALLE TEST 100, 28100, MADRID', '2025-06-03', 2),
+	(101, 'EquipoTest101', 'E01', '¡A ganar!', '#101101', 'clave101', 'CALLE TEST 101, 28101, MADRID', '2025-06-03', 2),
+	(102, 'EquipoTest102', 'E02', '¡A ganar!', '#102102', 'clave102', 'CALLE TEST 102, 28102, MADRID', '2025-06-03', 2),
+	(103, 'EquipoTest103', 'E03', '¡A ganar!', '#103103', 'clave103', 'CALLE TEST 103, 28103, MADRID', '2025-06-03', 2),
+	(104, 'EquipoTest104', 'E04', '¡A ganar!', '#104104', 'clave104', 'CALLE TEST 104, 28104, MADRID', '2025-06-03', 2),
+	(105, 'EquipoTest105', 'E05', '¡A ganar!', '#105105', 'clave105', 'CALLE TEST 105, 28105, MADRID', '2025-06-03', 2),
+	(106, 'EquipoTest106', 'E06', '¡A ganar!', '#106106', 'clave106', 'CALLE TEST 106, 28106, MADRID', '2025-06-03', 2),
+	(107, 'EquipoTest107', 'E07', '¡A ganar!', '#107107', 'clave107', 'CALLE TEST 107, 28107, MADRID', '2025-06-03', 2),
+	(108, 'EquipoTest108', 'E08', '¡A ganar!', '#108108', 'clave108', 'CALLE TEST 108, 28108, MADRID', '2025-06-03', 2),
+	(109, 'EquipoTest109', 'E09', '¡A ganar!', '#109109', 'clave109', 'CALLE TEST 109, 28109, MADRID', '2025-06-03', 2),
+	(110, 'EquipoTest110', 'E10', '¡A ganar!', '#110110', 'clave110', 'CALLE TEST 110, 28110, MADRID', '2025-06-03', 2),
+	(111, 'EquipoTest111', 'E11', '¡A ganar!', '#111111', 'clave111', 'CALLE TEST 111, 28111, MADRID', '2025-06-03', 2),
+	(112, 'EquipoTest112', 'E12', '¡A ganar!', '#112112', 'clave112', 'CALLE TEST 112, 28112, MADRID', '2025-06-03', 2),
+	(113, 'EquipoTest113', 'E13', '¡A ganar!', '#113113', 'clave113', 'CALLE TEST 113, 28113, MADRID', '2025-06-03', 2),
+	(114, 'EquipoTest114', 'E14', '¡A ganar!', '#114114', 'clave114', 'CALLE TEST 114, 28114, MADRID', '2025-06-03', 2),
+	(117, 'LosInteligentes', 'LOI', 'Naaaa de lokos', '#be1919', '1234', 'AVENIDA CERRO MILANO 1, 28051, MADRID', '2025-06-03', 3),
+	(120, 'Pollkitossss', 'PLL', 'lasoaslaso', '#77b021', '1234', 'CALLE TERTULIA 7, 28041, MADRID', '2025-06-03', 122);
 
 CREATE TABLE IF NOT EXISTS `equipo_jugadores` (
   `equipoId` int(11) NOT NULL,
@@ -53,14 +68,54 @@ CREATE TABLE IF NOT EXISTS `equipo_jugadores` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 INSERT INTO `equipo_jugadores` (`equipoId`, `jugadorId`) VALUES
-	(1, 1),
-	(1, 3),
-	(2, 2),
-	(2, 5),
-	(3, 4),
-	(3, 6),
-	(3, 7),
-	(21, 36);
+	(99, 99),
+	(100, 100),
+	(100, 101),
+	(100, 102),
+	(101, 103),
+	(101, 104),
+	(101, 105),
+	(102, 106),
+	(102, 107),
+	(102, 108),
+	(103, 109),
+	(103, 110),
+	(103, 111),
+	(104, 112),
+	(104, 113),
+	(104, 114),
+	(105, 100),
+	(105, 101),
+	(105, 102),
+	(106, 103),
+	(106, 104),
+	(106, 105),
+	(107, 106),
+	(107, 107),
+	(107, 108),
+	(108, 109),
+	(108, 110),
+	(108, 111),
+	(109, 112),
+	(109, 113),
+	(109, 114),
+	(110, 100),
+	(110, 101),
+	(110, 102),
+	(111, 103),
+	(111, 104),
+	(111, 105),
+	(112, 106),
+	(112, 107),
+	(112, 108),
+	(113, 109),
+	(113, 110),
+	(113, 111),
+	(114, 112),
+	(114, 113),
+	(114, 114),
+	(117, 3),
+	(120, 122);
 
 CREATE TABLE IF NOT EXISTS `estadio` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -587,10 +642,27 @@ CREATE TABLE IF NOT EXISTS `goles` (
   PRIMARY KEY (`id`),
   KEY `FK_0bb023a49f8bfe92a4bfe17fdbc` (`partidoId`),
   CONSTRAINT `FK_0bb023a49f8bfe92a4bfe17fdbc` FOREIGN KEY (`partidoId`) REFERENCES `partidos` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=121 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 INSERT INTO `goles` (`id`, `partidoId`, `equipo`, `jugador`, `asistidoPor`, `tipo`, `minuto`) VALUES
-	(7, 52, 'local', 'ana_lopez', 'juanperez', 'penalti', '12:12');
+	(99, 99, 'local', 'test_user', NULL, 'penalti', '10:01'),
+	(100, 100, 'local', 'test_user100', NULL, 'penalti', '10:01'),
+	(101, 101, 'local', 'test_user101', NULL, 'penalti', '11:01'),
+	(102, 102, 'local', 'test_user102', NULL, 'penalti', '12:01'),
+	(103, 103, 'local', 'test_user103', NULL, 'penalti', '13:01'),
+	(104, 104, 'local', 'test_user104', NULL, 'penalti', '14:01'),
+	(105, 105, 'local', 'test_user105', NULL, 'penalti', '15:01'),
+	(106, 106, 'local', 'test_user106', NULL, 'penalti', '16:01'),
+	(107, 107, 'local', 'test_user107', NULL, 'penalti', '17:01'),
+	(108, 108, 'local', 'test_user108', NULL, 'penalti', '18:01'),
+	(109, 109, 'local', 'test_user109', NULL, 'penalti', '19:01'),
+	(110, 110, 'local', 'test_user110', NULL, 'penalti', '20:01'),
+	(111, 111, 'local', 'test_user111', NULL, 'penalti', '21:01'),
+	(112, 112, 'local', 'test_user112', NULL, 'penalti', '22:01'),
+	(114, 114, 'local', 'test_user114', NULL, 'penalti', '00:01'),
+	(118, 113, 'local', 'arbitro109', 'arbitro109', 'penalti', '12:12'),
+	(119, 119, 'local', 'TomasCano99', 'TomasCano99', 'penalti', '12:12'),
+	(120, 119, 'local', 'TomasCano99', 'TomasCano99', 'penalti', '12:12');
 
 CREATE TABLE IF NOT EXISTS `jugadores` (
   `id_jugador` int(11) NOT NULL AUTO_INCREMENT,
@@ -601,21 +673,36 @@ CREATE TABLE IF NOT EXISTS `jugadores` (
   PRIMARY KEY (`id_jugador`),
   UNIQUE KEY `REL_148c40f4c22b5b2afbc98d1e27` (`id_usuario`),
   CONSTRAINT `FK_148c40f4c22b5b2afbc98d1e27c` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 INSERT INTO `jugadores` (`id_jugador`, `num_camiseta`, `pierna_buena`, `id_usuario`, `posicion`) VALUES
 	(1, 10, 'diestro', 1, 'delantero'),
 	(2, 1, 'zurdo', 4, 'portero'),
-	(3, 7, 'diestro', 5, 'centrocampista'),
-	(4, 5, 'diestro', 7, 'defensa'),
-	(5, 8, 'zurdo', 8, ''),
-	(6, 9, 'diestro', 9, 'delantero'),
-	(7, 13, 'diestro', 10, 'portero'),
-	(8, 11, 'zurdo', 3, 'delantero'),
-	(36, 123, 'ambidiestro', 61, 'defensa'),
-	(37, 123, 'diestro', 63, 'portero'),
-	(38, 123, 'diestro', 6, 'portero'),
-	(39, 123, 'diestro', 2, 'portero');
+	(3, 5, 'diestro', 3, 'defensa'),
+	(4, 1, 'ambidiestro', 5, 'portero'),
+	(5, 11, 'zurdo', 6, 'centrocampista'),
+	(6, 13, 'diestro', 7, 'portero'),
+	(7, 9, 'diestro', 8, 'delantero'),
+	(8, 7, 'zurdo', 10, 'centrocampista'),
+	(9, 4, 'diestro', 11, 'defensa'),
+	(99, 99, 'diestro', 99, 'delantero'),
+	(100, 10, 'diestro', 100, 'delantero'),
+	(101, 11, 'zurdo', 101, 'portero'),
+	(102, 12, 'diestro', 102, 'defensa'),
+	(103, 13, 'ambidiestro', 103, 'centrocampista'),
+	(104, 14, 'diestro', 104, 'delantero'),
+	(105, 15, 'zurdo', 105, 'portero'),
+	(106, 16, 'diestro', 106, 'defensa'),
+	(107, 17, 'ambidiestro', 107, 'centrocampista'),
+	(108, 18, 'diestro', 108, 'delantero'),
+	(109, 19, 'zurdo', 109, 'portero'),
+	(110, 20, 'diestro', 110, 'defensa'),
+	(111, 21, 'ambidiestro', 111, 'centrocampista'),
+	(112, 22, 'diestro', 112, 'delantero'),
+	(113, 23, 'zurdo', 113, 'portero'),
+	(114, 24, 'diestro', 114, 'defensa'),
+	(118, 12, 'diestro', 12, 'portero'),
+	(122, 3, 'diestro', 121, 'delantero');
 
 CREATE TABLE IF NOT EXISTS `partidos` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -634,10 +721,26 @@ CREATE TABLE IF NOT EXISTS `partidos` (
   CONSTRAINT `FK_6b3be79a9e40c3827d058570f15` FOREIGN KEY (`arbitroId`) REFERENCES `usuarios` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_7cd2cefed2da636edc3a06c8650` FOREIGN KEY (`equipoLocalId`) REFERENCES `equipos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_fe2b50c36cd8b6d5fa48c883e82` FOREIGN KEY (`equipoVisitanteId`) REFERENCES `equipos` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 INSERT INTO `partidos` (`id`, `equipoLocalId`, `equipoVisitanteId`, `estado`, `descripcion`, `fechaInicio`, `estadio`, `creadorId`, `arbitroId`) VALUES
-	(52, 1, 2, 'Activo', 'dsa ', '2025-06-12 00:17:00', 'CALLE EMBALSE DE SAN JUAN 1, 28051, MADRID', 1, 62);
+	(99, 99, 1, 'Rechazado', 'Partido de prueba', '2025-06-10 10:00:00', 'CALLE TEST 99, 28099, MADRID', 99, 99),
+	(100, 100, 101, 'Rechazado', 'Partido de prueba 100', '2025-06-10 10:00:00', 'CALLE TEST 100, 28100, MADRID', 100, 2),
+	(101, 101, 102, 'Rechazado', 'Partido de prueba 101', '2025-06-11 10:00:00', 'CALLE TEST 101, 28101, MADRID', 101, 2),
+	(102, 102, 103, 'Rechazado', 'Partido de prueba 102', '2025-06-12 10:00:00', 'CALLE TEST 102, 28102, MADRID', 102, 2),
+	(103, 103, 104, 'Rechazado', 'Partido de prueba 103', '2025-06-13 10:00:00', 'CALLE TEST 103, 28103, MADRID', 103, 2),
+	(104, 104, 105, 'Rechazado', 'Partido de prueba 104', '2025-06-14 10:00:00', 'CALLE TEST 104, 28104, MADRID', 104, 2),
+	(105, 105, 106, 'Rechazado', 'Partido de prueba 105', '2025-06-15 10:00:00', 'CALLE TEST 105, 28105, MADRID', 105, 2),
+	(106, 106, 107, 'Rechazado', 'Partido de prueba 106', '2025-06-16 10:00:00', 'CALLE TEST 106, 28106, MADRID', 106, 2),
+	(107, 107, 108, 'Rechazado', 'Partido de prueba 107', '2025-06-17 10:00:00', 'CALLE TEST 107, 28107, MADRID', 107, 2),
+	(108, 108, 109, 'Rechazado', 'Partido de prueba 108', '2025-06-18 10:00:00', 'CALLE TEST 108, 28108, MADRID', 108, 2),
+	(109, 109, 110, 'Rechazado', 'Partido de prueba 109', '2025-06-19 10:00:00', 'CALLE TEST 109, 28109, MADRID', 109, 2),
+	(110, 110, 111, 'Rechazado', 'Partido de prueba 110', '2025-06-20 10:00:00', 'CALLE TEST 110, 28110, MADRID', 110, 2),
+	(111, 111, 112, 'Rechazado', 'Partido de prueba 111', '2025-06-21 10:00:00', 'CALLE TEST 111, 28111, MADRID', 111, 2),
+	(112, 112, 113, 'Rechazado', 'Partido de prueba 112', '2025-06-22 10:00:00', 'CALLE TEST 112, 28112, MADRID', 112, 2),
+	(113, 113, 114, 'Terminado', 'Partido de prueba 113', '2025-06-23 10:00:00', 'CALLE TEST 113, 28113, MADRID', 113, 2),
+	(114, 114, 100, 'Rechazado', 'Partido de prueba 114', '2025-06-24 10:00:00', 'CALLE TEST 114, 28114, MADRID', 114, 2),
+	(119, 120, 117, 'Terminado', 'Partido clasificatorio de la temporada, venir todo el mundo a verlo', '2025-06-21 06:47:00', 'CALLE EMBALSE DE SAN JUAN 1, 28051, MADRID', 121, 99);
 
 CREATE TABLE IF NOT EXISTS `personas` (
   `id_persona` int(11) NOT NULL AUTO_INCREMENT,
@@ -656,22 +759,41 @@ CREATE TABLE IF NOT EXISTS `personas` (
   PRIMARY KEY (`id_persona`),
   UNIQUE KEY `REL_8119d9635757d434ba622f004b` (`id_usuario`),
   CONSTRAINT `FK_8119d9635757d434ba622f004ba` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=59 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=122 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 INSERT INTO `personas` (`id_persona`, `nombre`, `primer_apellido`, `segundo_apellido`, `fechaNac`, `sexo`, `peso`, `altura`, `municipio`, `codigo_postal`, `direccion`, `biografia`, `id_usuario`) VALUES
 	(1, 'Juan', 'Perez', 'Lopez', '1990-04-15', 'hombre', 75, 1.8, 'Madrid', '28001', 'Calle Falsa 123', 'Apasionado del fútbol', 1),
 	(2, 'Maria', 'Garcia', 'Sanchez', '1988-11-30', 'mujer', 65, 123, 'Madrid', '28002', 'Av. Siempre Viva 742', 'Árbitra profesional', 2),
-	(3, 'Admin', 'User', 'asd', '1985-01-01', 'hombre', 123, 123, 'Madrid', '28003', 'C/ Administrador 1', 'Administrador del sistema', 3),
-	(4, 'Luis', 'Gomez', 'Fernandez', '1992-08-20', 'hombre', 70, 1.75, 'Madrid', '28004', 'Plaza Mayor 5', 'Delantero rápido y técnico', 4),
-	(5, 'Ana', 'Lopez', 'Martinez', '1995-03-10', 'mujer', 60, 1.68, 'Madrid', '28005', 'Calle Luna 14', 'Centrocampista con visión', 5),
-	(6, 'Pedro', 'Martin', 'Santos', '1987-12-05', 'hombre', 80, 123123, 'Madrid', '28006', 'Av. Sol 33', 'Árbitro experimentado', 6),
-	(7, 'Marta', 'Diaz', 'Gonzalez', '1993-07-17', 'mujer', 62, 1.7, 'Madrid', '28007', 'Calle Nubes 22', 'Defensora incansable', 7),
-	(8, 'Carlos', 'Ruiz', 'Blanco', '1991-11-22', 'hombre', 78, 1.82, 'Madrid', '28008', 'Av. Estrella 11', 'Mediocentro defensivo', 8),
-	(9, 'Sofia', 'Ramirez', 'Diaz', '1996-06-30', 'mujer', 59, 1.67, 'Madrid', '28009', 'Calle Mar 9', 'Delantera goleadora', 9),
-	(10, 'Javier', 'Torres', 'Lopez', '1990-09-12', 'hombre', 74, 1.79, 'Madrid', '28010', 'Av. Montaña 18', 'Portero seguro y rápido', 10),
-	(56, 'Carlos', 'Martínez', '', '1980-07-15', 'hombre', 75, 178, 'Madrid', NULL, 'Calle Falsa 123', 'Árbitro federado con 10 años de experiencia.', 62),
-	(57, 'Ana', 'García', 'asdf', '1985-03-22', 'mujer', 65, 165, 'Barcelona', '12312', 'Av. Siempre Viva 742', 'Árbitra nacional, forma parte de la liga regional.', 63),
-	(58, 'Holaaa', 'Holaaa', 'Holaaa', '2001-12-23', 'mujer', 213, 123, 'SDF', '22222', 'SDF', 'SDF', 61);
+	(3, 'Carlos', 'Ramos', 'Delgado', '1992-05-14', 'hombre', 72, 1.78, 'Madrid', '28003', 'Calle Luna 12', 'Jugador experimentado en defensa.', 3),
+	(4, 'Laura', 'Martin', 'Gutierrez', '1985-03-10', 'mujer', 60, 1.65, 'Madrid', '28004', 'Calle Sol 8', 'Árbitra con 10 años de experiencia.', 4),
+	(5, 'Andres', 'Gomez', 'Fernandez', '1994-09-21', 'hombre', 80, 1.82, 'Madrid', '28005', 'Av. del Parque 34', 'Apasionado del fútbol ofensivo.', 5),
+	(6, 'Marta', 'Fernandez', 'López', '1996-12-02', 'mujer', 68, 1.7, 'Madrid', '28006', 'Calle del Río 5', 'Jugadora polivalente.', 6),
+	(7, 'Roberto', 'Lopez', 'Martinez', '1987-07-19', 'hombre', 85, 1.85, 'Madrid', '28007', 'Calle Valle 13', 'Portero veterano.', 7),
+	(8, 'Ana', 'Lopez', 'Torres', '1993-11-11', 'mujer', 62, 1.68, 'Madrid', '28008', 'Av. del Bosque 21', 'Delantera rápida.', 8),
+	(9, 'Javier', 'Ruiz', 'Santos', '1989-08-30', 'hombre', 76, 1.75, 'Madrid', '28009', 'Calle Pez 19', 'Árbitro de ligas locales.', 9),
+	(10, 'Ines', 'Sanchez', 'Vega', '1995-06-06', 'mujer', 58, 1.6, 'Madrid', '28010', 'Calle Flor 3', 'Centrocampista organizadora.', 10),
+	(11, 'Daniel', 'Rodriguez', 'Morales', '1990-02-25', 'hombre', 77, 1.8, 'Madrid', '28011', 'Calle Nube 7', 'Capitán de su equipo.', 11),
+	(12, 'Vallecas', 'Admin', 'General', '1980-01-01', 'hombre', 70, 175, 'Madrid', '28012', 'Calle Central 1', 'Administrador de la plataforma.', 12),
+	(13, 'Prueba', 'Test', 'Demo', '2000-01-01', 'hombre', 70, 1.75, 'Madrid', '28013', 'Calle Prueba 1', 'Usuario de prueba para testeo.', NULL),
+	(99, 'Arbitro', 'Oficial', 'Demo', '1999-09-09', 'hombre', 77, 1.77, 'Madrid', '28099', 'Calle Test 99', 'Persona de prueba integral.', 99),
+	(100, 'Test100', 'User', 'Demo', '1990-01-01', 'hombre', 70, 1.7, 'Madrid', '28100', 'Calle Test 100', 'Persona de prueba 100.', 100),
+	(101, 'Test101', 'User', 'Demo', '1990-01-02', 'hombre', 71, 1.71, 'Madrid', '28101', 'Calle Test 101', 'Persona de prueba 101.', 101),
+	(102, 'Test102', 'User', 'Demo', '1990-01-03', 'hombre', 72, 1.72, 'Madrid', '28102', 'Calle Test 102', 'Persona de prueba 102.', 102),
+	(103, 'Test103', 'User', 'Demo', '1990-01-04', 'hombre', 73, 1.73, 'Madrid', '28103', 'Calle Test 103', 'Persona de prueba 103.', 103),
+	(104, 'Test104', 'User', 'Demo', '1990-01-05', 'hombre', 74, 1.74, 'Madrid', '28104', 'Calle Test 104', 'Persona de prueba 104.', 104),
+	(105, 'Test105', 'User', 'Demo', '1990-01-06', 'hombre', 75, 1.75, 'Madrid', '28105', 'Calle Test 105', 'Persona de prueba 105.', 105),
+	(106, 'Test106', 'User', 'Demo', '1990-01-07', 'hombre', 76, 1.76, 'Madrid', '28106', 'Calle Test 106', 'Persona de prueba 106.', 106),
+	(107, 'Test107', 'User', 'Demo', '1990-01-08', 'hombre', 77, 1.77, 'Madrid', '28107', 'Calle Test 107', 'Persona de prueba 107.', 107),
+	(108, 'Test108', 'User', 'Demo', '1990-01-09', 'hombre', 78, 1.78, 'Madrid', '28108', 'Calle Test 108', 'Persona de prueba 108.', 108),
+	(109, 'Test109', 'User', 'Demo', '1990-01-10', 'hombre', 79, 1.79, 'Madrid', '28109', 'Calle Test 109', 'Persona de prueba 109.', 109),
+	(110, 'Test110', 'User', 'Demo', '1990-01-11', 'hombre', 80, 1.8, 'Madrid', '28110', 'Calle Test 110', 'Persona de prueba 110.', 110),
+	(111, 'Test111', 'User', 'Demo', '1990-01-12', 'hombre', 81, 1.81, 'Madrid', '28111', 'Calle Test 111', 'Persona de prueba 111.', 111),
+	(112, 'Test112', 'User', 'Demo', '1990-01-13', 'hombre', 82, 1.82, 'Madrid', '28112', 'Calle Test 112', 'Persona de prueba 112.', 112),
+	(113, 'Test113', 'User', 'Demo', '1990-01-14', 'hombre', 83, 1.83, 'Madrid', '28113', 'Calle Test 113', 'Persona de prueba 113.', 113),
+	(114, 'Test114', 'User', 'Demo', '1990-01-15', 'hombre', 84, 1.84, 'Madrid', '28114', 'Calle Test 114', 'Persona de prueba 114.', 114),
+	(117, 'Carlos', 'Martínez', '', '1980-07-15', 'hombre', 75, 178, 'Madrid', NULL, 'Calle Falsa 123', 'Árbitro federado con 10 años de experiencia.', 117),
+	(118, 'Ana', 'García', '', '1985-03-22', 'mujer', 65, 165, 'Barcelona', NULL, 'Av. Siempre Viva 742', 'Árbitra nacional, forma parte de la liga regional.', 118),
+	(121, 'Tomas', 'Cano', 'Nieto', '2003-06-23', 'hombre', 75, 175, 'Villaverde', '28041', 'Paseo de gigantes y cabezudos', 'Soy el mejor', 121);
 
 CREATE TABLE IF NOT EXISTS `reporte` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -685,22 +807,28 @@ CREATE TABLE IF NOT EXISTS `reporte` (
   PRIMARY KEY (`id`),
   KEY `FK_1d8c47b6e18a628974c71d12874` (`usuarioId`),
   CONSTRAINT `FK_1d8c47b6e18a628974c71d12874` FOREIGN KEY (`usuarioId`) REFERENCES `usuarios` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 INSERT INTO `reporte` (`id`, `titulo`, `tipo`, `correo`, `descripcion`, `estado`, `fecha`, `usuarioId`) VALUES
 	(1, 'Error al registrar equipo', 'Bug', 'juan.perez@mail.com', 'No me deja registrar un equipo con nombre largo.', 'Completado', '2025-05-30 20:53:45.081677', 1),
 	(2, 'Mejorar el panel de árbitros', 'Sugerencia', 'maria.garcia@mail.com', 'Sería útil que el panel mostrara los partidos pendientes por fecha.', 'Completado', '2025-05-30 20:53:45.081677', 2),
-	(3, 'Solicitud de cambio de horario', 'Petición', 'admin@mail.com', 'Solicito cambiar el horario del partido del domingo.', 'Completado', '2025-05-30 20:53:45.081677', 3),
-	(4, 'Error en los nombres de equipos', 'Bug', 'luis.gomez@mail.com', 'Los nombres de los equipos no se muestran correctamente.', 'Completado', '2025-05-30 20:53:45.081677', 4),
-	(5, 'Agregar más estadios', 'Sugerencia', 'ana.lopez@mail.com', 'Podéis agregar más estadios de la zona sur.', 'Completado', '2025-05-30 20:53:45.081677', 5),
-	(6, 'Petición de moderador', 'Petición', 'pedro.martin@mail.com', 'Quiero ayudar a gestionar partidos como moderador.', 'Rechazado', '2025-05-30 20:53:45.081677', 6),
-	(7, 'Fallos en el login', 'Bug', 'marta.diaz@mail.com', 'A veces me saca de la sesión sin motivo.', 'Completado', '2025-05-30 20:53:45.081677', 7),
-	(8, 'Sugerencia de nuevos roles', 'Sugerencia', 'carlos.ruiz@mail.com', 'Podríais añadir rol de organizador de torneo.', 'Completado', '2025-05-30 20:53:45.081677', 8),
-	(9, 'Problemas con la recuperación de contraseña', 'Bug', 'sofia.ramirez@mail.com', 'No recibo el código de recuperación.', 'Completado', '2025-05-30 20:53:45.081677', 9),
-	(10, 'Incidencia con la validación de usuario', 'Bug', 'javier.torres@mail.com', 'El sistema me pide validar el correo pero ya está validado.', 'Completado', '2025-05-30 20:53:45.081677', 10),
-	(11, 'asd', 'Bug', 'botleidersrp@gmail.com', 'dfdf', 'Completado', '2025-05-30 23:41:13.592247', 61),
-	(12, 'Nosequehacer', 'Equipo', 'marta.diaz@mail.com', 'sd sd sd sd ', 'Completado', '2025-05-31 00:49:40.529156', 4),
-	(13, 'Nosequehacer', 'Equipo', 'marta.diaz@mail.com', 'sd sd sd sd ', 'Completado', '2025-05-31 00:49:40.529156', 4);
+	(99, 'Prueba integral', 'Bug', 'test.user@mail.com', 'Este es un reporte de prueba.', 'Rechazado', '2025-06-03 12:00:00.000000', 99),
+	(100, 'Prueba masiva 100', 'Bug', 'test100@mail.com', 'Este es un reporte de prueba 100.', 'Rechazado', '2025-06-03 12:00:00.000000', 100),
+	(101, 'Prueba masiva 101', 'Bug', 'test101@mail.com', 'Este es un reporte de prueba 101.', 'Rechazado', '2025-06-03 12:00:00.000000', 101),
+	(102, 'Prueba masiva 102', 'Bug', 'test102@mail.com', 'Este es un reporte de prueba 102.', 'Rechazado', '2025-06-03 12:00:00.000000', 102),
+	(103, 'Prueba masiva 103', 'Bug', 'test103@mail.com', 'Este es un reporte de prueba 103.', 'Rechazado', '2025-06-03 12:00:00.000000', 103),
+	(104, 'Prueba masiva 104', 'Bug', 'test104@mail.com', 'Este es un reporte de prueba 104.', 'Rechazado', '2025-06-03 12:00:00.000000', 104),
+	(105, 'Prueba masiva 105', 'Bug', 'test105@mail.com', 'Este es un reporte de prueba 105.', 'Rechazado', '2025-06-03 12:00:00.000000', 105),
+	(106, 'Prueba masiva 106', 'Bug', 'test106@mail.com', 'Este es un reporte de prueba 106.', 'Rechazado', '2025-06-03 12:00:00.000000', 106),
+	(107, 'Prueba masiva 107', 'Bug', 'test107@mail.com', 'Este es un reporte de prueba 107.', 'Rechazado', '2025-06-03 12:00:00.000000', 107),
+	(108, 'Prueba masiva 108', 'Bug', 'test108@mail.com', 'Este es un reporte de prueba 108.', 'Rechazado', '2025-06-03 12:00:00.000000', 108),
+	(109, 'Prueba masiva 109', 'Bug', 'test109@mail.com', 'Este es un reporte de prueba 109.', 'Rechazado', '2025-06-03 12:00:00.000000', 109),
+	(110, 'Prueba masiva 110', 'Bug', 'test110@mail.com', 'Este es un reporte de prueba 110.', 'Rechazado', '2025-06-03 12:00:00.000000', 110),
+	(111, 'Prueba masiva 111', 'Bug', 'test111@mail.com', 'Este es un reporte de prueba 111.', 'Rechazado', '2025-06-03 12:00:00.000000', 111),
+	(112, 'Prueba masiva 112', 'Bug', 'test112@mail.com', 'Este es un reporte de prueba 112.', 'Rechazado', '2025-06-03 12:00:00.000000', 112),
+	(113, 'Prueba masiva 113', 'Bug', 'test113@mail.com', 'Este es un reporte de prueba 113.', 'Rechazado', '2025-06-03 12:00:00.000000', 113),
+	(114, 'Prueba masiva 114', 'Bug', 'test114@mail.com', 'Este es un reporte de prueba 114.', 'Rechazado', '2025-06-03 12:00:00.000000', 114),
+	(119, 'Error web login', 'Bug', 'tomascn777@gmail.com', 'Hay problemas a la hora de iniciar sesion', 'Completado', '2025-06-03 03:41:18.845131', 121);
 
 CREATE TABLE IF NOT EXISTS `tarjetas` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -712,10 +840,24 @@ CREATE TABLE IF NOT EXISTS `tarjetas` (
   PRIMARY KEY (`id`),
   KEY `FK_aa32105cc7d3d0261dd503d3584` (`partidoId`),
   CONSTRAINT `FK_aa32105cc7d3d0261dd503d3584` FOREIGN KEY (`partidoId`) REFERENCES `partidos` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 INSERT INTO `tarjetas` (`id`, `partidoId`, `equipo`, `jugador`, `tipo`, `minuto`) VALUES
-	(6, 52, 'local', 'juanperez', 'amarilla', '12:12');
+	(99, 99, 'local', 'test_user', 'roja', '10:00'),
+	(100, 100, 'local', 'test_user100', 'amarilla', '10:00'),
+	(101, 101, 'local', 'test_user101', 'roja', '11:00'),
+	(102, 102, 'local', 'test_user102', 'amarilla', '12:00'),
+	(103, 103, 'local', 'test_user103', 'roja', '13:00'),
+	(104, 104, 'local', 'test_user104', 'amarilla', '14:00'),
+	(105, 105, 'local', 'test_user105', 'roja', '15:00'),
+	(106, 106, 'local', 'test_user106', 'amarilla', '16:00'),
+	(107, 107, 'local', 'test_user107', 'roja', '17:00'),
+	(108, 108, 'local', 'test_user108', 'amarilla', '18:00'),
+	(109, 109, 'local', 'test_user109', 'roja', '19:00'),
+	(110, 110, 'local', 'test_user110', 'amarilla', '20:00'),
+	(111, 111, 'local', 'test_user111', 'roja', '21:00'),
+	(112, 112, 'local', 'test_user112', 'amarilla', '22:00'),
+	(114, 114, 'local', 'test_user114', 'amarilla', '00:00');
 
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -728,22 +870,41 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `codigoExpiracion` bigint(20) DEFAULT NULL,
   `foto` varchar(255) DEFAULT '../src/assets/logo/logo.png',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
 
 INSERT INTO `usuarios` (`id`, `Nombre_usu`, `Contrasena`, `Correo`, `rol`, `confirmado`, `codigoRecuperacion`, `codigoExpiracion`, `foto`) VALUES
 	(1, 'juanperez', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'juan.perez@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
-	(2, 'maria_garcia', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'maria.garcia@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
-	(3, 'adminuser', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'admin@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
-	(4, 'luisgomez', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'luis.gomez@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
-	(5, 'ana_lopez', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'ana.lopez@mail.com', 'administrador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
-	(6, 'pedro_martin', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'pedro.martin@mail.com', 'administrador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
-	(7, 'marta_diaz', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'marta.diaz@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
-	(8, 'carlos_ruiz', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'carlos.ruiz@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
-	(9, 'sofia_ramirez', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'sofia.ramirez@mail.com', 'administrador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
-	(10, 'javier_torres', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'javier.torres@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
-	(61, 'Bot LiedersRP', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'botleidersrp@gmail.com', 'jugador', 1, NULL, NULL, '/src/assets/avatars/imagen10.png'),
-	(62, 'carlos.martinez', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'carlos.martinez@example.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
-	(63, 'ana.garcia', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'ana.garcia@example.com', 'arbitro', 1, NULL, NULL, '/src/assets/avatars/imagen10.png');
+	(2, 'asdasdasdal', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'maria.garcia@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(3, 'carlos_ramos', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'carlos.ramos@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(4, 'laura_martin', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'laura.martin@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(5, 'andres_gomez', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'andres.gomez@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(6, 'marta_fernandez', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'marta.fernandez@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(7, 'roberto_lopez', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'roberto.lopez@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(8, 'ana_lopez', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'ana.lopez@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(9, 'javier_ruiz', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'javier.ruiz@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(10, 'ines_sanchez', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'ines.sanchez@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(11, 'daniel_rodriguez', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'daniel.rodriguez@mail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(12, 'administrador', '$2b$10$qa2pDihMD94EjtW545seFemCrMN8tfQ8tKXglH2mpRofdFVW7WwkO', 'admin@vallecas.com', 'administrador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(99, 'ArbitroOfficial', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro99@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(100, 'arbitro12', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro100@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(101, 'arbitro101', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro101@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(102, 'arbitro102', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro102@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(103, 'arbitro103', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro103@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(104, 'arbitro104', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro104@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(105, 'arbitro105', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro105@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(106, 'arbitro106', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro106@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(107, 'arbitro107', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro107@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(108, 'arbitro108', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro108@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(109, 'arbitro109', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro109@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(110, 'arbitro110', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro110@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(111, 'arbitro111', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro111@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(112, 'arbitro112', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro112@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(113, 'arbitro113', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro113@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(114, 'arbitro114', '$2b$12$QghsR6Q6pbXEMxuuVNOYl.tmsmj/8LBhSmC/U/LwZQAagfhup1ds6', 'arbitro114@mail.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(117, 'carlos.martinez', '$2b$10$v4ilMPpYFFrK8kHJgc6WSegpq5M1iNRwqlgw69WZTA7lYecP/5z6y', 'carlos.martinez@example.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(118, 'ana.garcia', '$2b$10$qa2pDihMD94EjtW545seFemCrMN8tfQ8tKXglH2mpRofdFVW7WwkO', 'ana.garcia@example.com', 'arbitro', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(121, 'TomasCano99', '$2b$10$/mi4xjiDachEcK/Qrz79.eB2//VfDu/hd/H6BES.3kNbNhzWXnx/a', 'tomascn777@gmail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png'),
+	(122, 'Tomas Cano', '$2b$10$cJZejRvweP5ePh3CrMO/ZOaa250C/Qkwt2w7f5UxTzbIJbst476C6', 'byruby12.contacto@gmail.com', 'jugador', 1, NULL, NULL, '../src/assets/logo/logo.png');
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -87,35 +87,32 @@
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1" for="equipoVisitante">Equipo
                         Visitante</label>
-                    <select v-model="form.equipoVisitanteId"
-                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500">
-                        <option disabled value="" class="px-4 py-2 hover:bg-indigo-100 cursor-pointer">Equipo Visitante
-                        </option>
-                        <option v-for="e in opcionesVisitantes" :value="e.id" :key="e.id"
-                            class="px-4 py-2 hover:bg-indigo-100 cursor-pointer">{{ e.nombre }}</option>
-                    </select>
+                    <input
+                        v-model="visitanteNombre"
+                        list="visitantes-list"
+                        placeholder="Buscar equipo visitante..."
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        @input="onVisitanteChange"
+                    >
+                    <datalist id="visitantes-list">
+                        <option v-for="e in opcionesVisitantesDatalist" :key="e.id" :value="e.nombre"></option>
+                    </datalist>
                 </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Árbitro</label>
-                    <select v-model="form.arbitroId"
-                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500">
-                        <option disabled value="" class="px-4 py-2 hover:bg-indigo-100 cursor-pointer">Elige un árbitro
-                        </option>
-                        <option v-for="a in arbitros" :key="a.id" :value="a.id">
-                            <template v-if="a.persona" class="px-4 py-2 hover:bg-indigo-100 cursor-pointer">
-                                {{ a.persona.nombre }} {{ a.persona.primer_apellido }}
-                                <span v-if="a.persona.segundo_apellido"
-                                    class="px-4 py-2 hover:bg-indigo-100 cursor-pointer"> {{ a.persona.segundo_apellido
-                                    }}</span>
-                            </template>
-                            <template v-else class="px-4 py-2 hover:bg-indigo-100 cursor-pointer">
-                                {{ a.Nombreusu }}
-                            </template>
-                        </option>
-                    </select>
+                    <input
+                        v-model="arbitroNombre"
+                        list="arbitros-list"
+                        placeholder="Buscar árbitro..."
+                        class="w-full px-4 py-3 border-2 border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-indigo-500"
+                        @input="onArbitroChange"
+                    >
+                    <datalist id="arbitros-list">
+                        <option v-for="a in opcionesArbitrosDatalist" :key="a.id" :value="a.label"></option>
+                    </datalist>
                 </div>
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 mb-1">Fecha y Hora</label>
@@ -231,6 +228,7 @@ const form = ref({
     codigoPostal: '',
     arbitroId: null as number | null
 })
+
 interface Arbitro {
     id: number
     Nombreusu: string
@@ -242,13 +240,45 @@ interface Arbitro {
 }
 const arbitros = ref<Arbitro[]>([])
 const todosEquipos = ref<any[]>([])
-const opcionesLocales = computed(() =>
-    todosEquipos.value.filter(e => e.id !== form.value.equipoVisitanteId)
-)
+const visitanteNombre = ref('')
+const arbitroNombre = ref('')
 
-const opcionesVisitantes = computed(() =>
-    todosEquipos.value.filter(e => miEquipo.value && e.id !== miEquipo.value.id)
-)
+const opcionesVisitantesDatalist = computed(() => {
+    // Excluye mi equipo
+    return todosEquipos.value.filter(e => miEquipo.value && e.id !== miEquipo.value.id)
+})
+
+const opcionesArbitrosDatalist = computed(() => {
+    return arbitros.value.map(a => ({
+        id: a.id,
+        label: a.persona
+            ? `${a.persona.nombre} ${a.persona.primer_apellido}${a.persona.segundo_apellido ? ' ' + a.persona.segundo_apellido : ''}`
+            : a.Nombreusu
+    }))
+})
+
+function onVisitanteChange(e: Event) {
+    const nombre = visitanteNombre.value.trim().toLowerCase()
+    const equipo = opcionesVisitantesDatalist.value.find(e => e.nombre.toLowerCase() === nombre)
+    form.value.equipoVisitanteId = equipo ? equipo.id : null
+}
+
+function onArbitroChange(e: Event) {
+    const nombre = arbitroNombre.value.trim().toLowerCase()
+    const arbitro = opcionesArbitrosDatalist.value.find(a => a.label.toLowerCase() === nombre)
+    form.value.arbitroId = arbitro ? arbitro.id : null
+}
+
+watch(() => form.value.equipoVisitanteId, (nuevo) => {
+    // Sincroniza el nombre en el input si cambia el id
+    const eq = opcionesVisitantesDatalist.value.find(e => e.id === nuevo)
+    visitanteNombre.value = eq ? eq.nombre : ''
+})
+
+watch(() => form.value.arbitroId, (nuevo) => {
+    const ar = opcionesArbitrosDatalist.value.find(a => a.id === nuevo)
+    arbitroNombre.value = ar ? ar.label : ''
+})
 
 const fetchMisEquipos = async () => {
     const { data } = await axios.get('http://localhost:3000/equipos/mi-equipo', { withCredentials: true })
@@ -301,16 +331,6 @@ const crearPartido = async () => {
         form.value.equipoLocalId = miEquipo.value.id
     }
     await axios.post('http://localhost:3000/partidos', form.value, { withCredentials: true })
-    // Resetear el formulario después de crear el partido
-    form.value = {
-        equipoLocalId: miEquipo.value ? miEquipo.value.id : null,
-        equipoVisitanteId: null,
-        descripcion: '',
-        fechaInicio: '',
-        estadio: '',
-        codigoPostal: '',
-        arbitroId: null
-    }
     await fetchMisPartidos()
     tab.value = 'mios'
 }
